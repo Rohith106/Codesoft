@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Virtual Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .calculator {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            width: 300px;
+        }
+        .screen {
+            background-color: #f9f9f9;
+            border-bottom: 1px solid #ccc;
+            font-size: 24px;
+            padding: 10px;
+            text-align: right;
+        }
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1px;
+        }
+        button {
+            background-color: #e0e0e0;
+            border: none;
+            cursor: pointer;
+            font-size: 20px;
+            padding: 20px 0;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #d5d5d5;
+        }
+        button.operator {
+            background-color: #ff0000;
+            color: #fff;
+        }
+        button.clear {
+            background-color: #608b76;
+            color: #fff;
+        }
+        button.equals {
+            grid-column: span 2;
+            background-color: #4ca3af;
+            color: #fff;
+        }
+        button.delete {
+            background-color: #d436f4;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <div class="screen" id="screen">0</div>
+        <div class="buttons">
+            <button class="clear" onclick="clearScreen()">C</button>
+            <button class="operator" onclick="appendToScreen('/')">/</button>
+            <button class="operator" onclick="appendToScreen('')"></button>
+            <button class="delete" onclick="deleteFromScreen()">DEL</button>
+            <button onclick="appendToScreen('7')">7</button>
+            <button onclick="appendToScreen('8')">8</button>
+            <button onclick="appendToScreen('9')">9</button>
+            <button class="operator" onclick="appendToScreen('-')">-</button>
+            <button onclick="appendToScreen('4')">4</button>
+            <button onclick="appendToScreen('5')">5</button>
+            <button onclick="appendToScreen('6')">6</button>
+            <button class="operator" onclick="appendToScreen('+')">+</button>
+            <button onclick="appendToScreen('1')">1</button>
+            <button onclick="appendToScreen('2')">2</button>
+            <button onclick="appendToScreen('3')">3</button>
+            <button class="equals" onclick="calculateResult()">=</button>
+            <button onclick="appendToScreen('0')">0</button>
+            <button onclick="appendToScreen('.')">.</button>
+        </div>
+    </div>
+
+    <script>
+        function appendToScreen(value) {
+            var screen = document.getElementById('screen');
+            if (screen.textContent === '0' && value !== '.') {
+                screen.textContent = '';
+            }
+            screen.textContent += value;
+        }
+
+        function deleteFromScreen() {
+            var screen = document.getElementById('screen');
+            screen.textContent = screen.textContent.slice(0, -1);
+            if (screen.textContent === '') {
+                screen.textContent = '0';
+            }
+        }
+
+        function clearScreen() {
+            document.getElementById('screen').textContent = '0';
+        }
+
+        function calculateResult() {
+            var screenContent = document.getElementById('screen').textContent;
+            var result;
+            try {
+                result = eval(screenContent);
+            } catch (error) {
+                result = 'Error';
+            }
+            document.getElementById('screen').textContent = result;
+        }
+    </script>
+</body>
+</html>
